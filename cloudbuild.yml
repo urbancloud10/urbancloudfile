@@ -9,7 +9,7 @@ steps:
     args: 
       [
         "deploy", "releases", "create", "rel-${SHORT_SHA}",
-        "--delivery-pipeline", "urbanclou",
+        "--delivery-pipeline", "urbancloudd",
         "--region", "europe-west1",
         "--annotations", "commitId=${REVISION_ID}",
         "--images", "cloud-deploy=europe-west1-docker.pkg.dev/$PROJECT_ID/clouddeploy/flaskapp:$COMMIT_SHA",
