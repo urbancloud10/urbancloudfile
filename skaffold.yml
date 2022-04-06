@@ -1,0 +1,17 @@
+apiVersion: skaffold/v2beta16
+kind: Config
+metadata:
+  name: cloud-deploy
+deploy:
+  kustomize:
+    defaultNamespace: dev
+    paths: 
+      - k8s/overlays/dev
+profiles:
+  - name: sta
+    deploy:
+      kustomize:
+        defaultNamespace: sta
+        paths: 
+          - k8s/overlays/sta
+          

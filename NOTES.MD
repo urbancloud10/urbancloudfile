@@ -1,0 +1,21 @@
+
+- k8s readnessprobe and livenessprode *
+- vertical autoscaler, horizontal autoscaler *
+- git repository *
+- CI piipeline *
+    - unit test
+    - quality scan - 
+    - security scan -
+    - build the image
+    - push to registry
+
+- Develop env
+- Pre-production env
+- Production env
+- Create a TLS certificates, cert manager with helm to get Letsencrypt
+- CI pipeline
+    - load testing
+- CD pipeline
+    - spinnaker
+- Monitoring
+- roll back procesure

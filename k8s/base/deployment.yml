@@ -1,0 +1,39 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treeweb
+spec:
+  selector:
+    matchLabels:
+      app: treeweb
+      version: v1
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: treeweb
+        version: v1
+    spec:
+      containers:
+      - name: treewebserver
+        image: cloud-deploy
+        resources:
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
+        livenessProbe:
+          httpGet:
+            path: /tree
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        readinessProbe:
+          httpGet:
+            path: /tree
+            port: 5000
+          initialDelaySeconds: 1
+          periodSeconds: 10
+          

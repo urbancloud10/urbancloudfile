@@ -1,0 +1,17 @@
+steps:
+  # Build and tag using commit shaaa
+  - name: "gcr.io/kaniko-project/executor"
+    args: ["--context","/workspace","--destination","europe-west1-docker.pkg.dev/$PROJECT_ID/clouddeploy/flaskapp:$COMMIT_SHA","--destination","europe-west1-docker.pkg.dev/$PROJECT_ID/clouddeploy/flaskapp:latest" ,"--dockerfile","/workspace/Dockerfile", "--cache"]
+
+  # Create release in Google Cloud Deploy
+  - name: gcr.io/google.com/cloudsdktool/cloud-sdk
+    entrypoint: gcloud
+    args: 
+      [
+        "deploy", "releases", "create", "rel-${SHORT_SHA}",
+        "--delivery-pipeline", "urbancloud",
+        "--region", "europe-west1",
+        "--annotations", "commitId=${REVISION_ID}",
+        "--images", "cloud-deploy=europe-west1-docker.pkg.dev/$PROJECT_ID/clouddeploy/flaskapp:$COMMIT_SHA",
+        "--skaffold-file=skaffold.yml"
+      ]

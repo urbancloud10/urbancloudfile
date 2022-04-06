@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: treewebservice
+spec:
+  selector:
+    app: treeweb
+    version: v1
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 5000
+      

@@ -1,0 +1,51 @@
+apiVersion: v1 
+kind: Service
+metadata:
+  name: treewebservice
+spec:
+  ports:
+  - port: 80
+    protocol: TCP
+    targetPort: 5000
+  selector:
+    app: treeweb
+    version: v1
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: treeweb
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: treeweb
+      version: v1
+  template:
+    metadata:
+      labels:
+        app: treeweb
+        version: v1
+    spec:
+      containers:
+      - image: europe-west1-docker.pkg.dev/emergya-digital-cloud-lab/clouddeploy/flaskapp:7d8e73c6b9bb97fe041d97fc642503d361b9a256
+        livenessProbe:
+          httpGet:
+            path: /tree
+            port: 5000
+          initialDelaySeconds: 3
+          periodSeconds: 3
+        name: treewebserver
+        readinessProbe:
+          httpGet:
+            path: /tree
+            port: 5000
+          initialDelaySeconds: 1
+          periodSeconds: 10
+        resources:
+          limits:
+            cpu: 1
+            memory: 512Mi
+          requests:
+            cpu: 100m
+            memory: 128Mi
